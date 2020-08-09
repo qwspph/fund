@@ -22,8 +22,7 @@ public class LoginServlet extends HttpServlet {
 		IUserService service = new UserServiceImpl();
 		User user = service.loginUser(account, password);
 		if(user==null) {
-			String message = String.format("对不起，用户名或密码有误！请重新登录！2秒后自动跳转到登录页面。。。"
-					+ "<meta http-equiv='refresh' content='2;url=%s'", 
+			String message = String.format("对不起，用户名或密码有误！请重新登录！2秒后自动跳转到登录页面。。。<meta http-equiv='refresh' content='2;url=%s'/>", 
 					request.getContextPath()+"/servlet/LoginUIServlet");
 			request.setAttribute("message", message);
 			request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -31,12 +30,10 @@ public class LoginServlet extends HttpServlet {
 		}else {
 			HttpSession session = request.getSession();
 			session.setAttribute("user",user);
-			System.out.println(user);//
-			String message = String.format("恭喜：%s登录成功！即将跳到首页！"
-					+ "<meta http-equitv='refresh' conten='1;url=%s'",
+			String message = String.format("恭喜：%s登录成功！即将跳到首页！<meta http-equiv='refresh' content='1;url=%s'",
 					user.getAccount(),
 					request.getContextPath()+"/index.jsp");
-			request.setAttribute(message, message);
+			request.setAttribute("message", message);
 			request.getRequestDispatcher("/message.jsp").forward(request, response);
 		}
 	}
